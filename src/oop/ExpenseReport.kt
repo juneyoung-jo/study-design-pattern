@@ -5,23 +5,29 @@ import oop.Expense.Type.*
 /**
  * link : https://github.com/msbaek/expense
  */
-class ExpenseReport {
-    private val expenses: MutableList<Expense> = ArrayList()
+class ExpenseReport(
+    private val expenses: MutableList<Expense> = ArrayList(),
+    private var total: Int = 0,
+    private var mealExpenses: Int = 0
+) {
 
     fun printReport(printer: ReportPrinter) {
-        var total = 0
-        var mealExpenses = 0
         printHeader(printer)
+
+        totalUpExpenses()
+
+        printExpenses(printer)
+
+        printToTotal(printer, mealExpenses, total)
+    }
+
+    private fun totalUpExpenses() {
         for (expense in expenses) {
             if (expense.type === BREAKFAST || expense.type === DINNER)
                 mealExpenses += expense.amount
 
             total += expense.amount
         }
-
-        printExpenses(printer)
-
-        printToTotal(printer, mealExpenses, total)
     }
 
     private fun printExpenses(printer: ReportPrinter) {
