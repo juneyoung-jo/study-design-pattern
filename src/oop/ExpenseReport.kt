@@ -2,16 +2,24 @@ package oop
 
 import oop.Expense.Type.*
 
-
+/**
+ * link : https://github.com/msbaek/expense
+ */
 class ExpenseReport {
     private val expenses: MutableList<Expense> = ArrayList()
 
     fun printReport(printer: ReportPrinter) {
         var total = 0
         var mealExpenses = 0
-        printer.print("Expenses $date\n")
+        printHeader(printer)
         for (expense in expenses) {
-            if (expense.type === BREAKFAST || expense.type === DINNER) mealExpenses += expense.amount
+            if (expense.type === BREAKFAST || expense.type === DINNER)
+                mealExpenses += expense.amount
+
+            total += expense.amount
+        }
+
+        for (expense in expenses) {
             var name = "TILT"
             name = when (expense.type) {
                 DINNER -> "Dinner"
@@ -24,14 +32,29 @@ class ExpenseReport {
                     if (expense.type === DINNER && expense.amount > 5000
                         || expense.type === BREAKFAST && expense.amount > 1000
                     ) "X" else " ",
-                    name, expense.amount / 100.0
+                    name, penniesToDollars(expense.amount)
                 )
             )
-            total += expense.amount
         }
-        printer.print(String.format("\nMeal expenses $%.02f", mealExpenses / 100.0))
-        printer.print(String.format("\nTotal $%.02f", total / 100.0))
+
+        printToTotal(printer, mealExpenses, total)
     }
+
+    private fun printToTotal(
+        printer: ReportPrinter,
+        mealExpenses: Int,
+        total: Int
+    ) {
+        printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(mealExpenses)))
+        printer.print(String.format("\nTotal $%.02f", penniesToDollars(total)))
+    }
+
+    private fun printHeader(printer: ReportPrinter) {
+        printer.print("Expenses $date\n")
+    }
+
+    private fun penniesToDollars(amount: Int) =
+        amount / 100.0
 
     fun addExpense(expense: Expense) {
         expenses.add(expense)
