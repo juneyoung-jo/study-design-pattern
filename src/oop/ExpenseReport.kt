@@ -18,7 +18,7 @@ class ExpenseReport(
 
         printExpenses(printer)
 
-        printToTotal(printer, mealExpenses, total)
+        printToTotal(printer)
     }
 
     private fun totalUpExpenses() {
@@ -50,11 +50,7 @@ class ExpenseReport(
         }
     }
 
-    private fun printToTotal(
-        printer: ReportPrinter,
-        mealExpenses: Int,
-        total: Int
-    ) {
+    private fun printToTotal(printer: ReportPrinter) {
         printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(mealExpenses)))
         printer.print(String.format("\nTotal $%.02f", penniesToDollars(total)))
     }
