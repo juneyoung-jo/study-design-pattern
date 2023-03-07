@@ -19,6 +19,12 @@ class ExpenseReport {
             total += expense.amount
         }
 
+        printExpenses(printer)
+
+        printToTotal(printer, mealExpenses, total)
+    }
+
+    private fun printExpenses(printer: ReportPrinter) {
         for (expense in expenses) {
             var name = "TILT"
             name = when (expense.type) {
@@ -36,8 +42,6 @@ class ExpenseReport {
                 )
             )
         }
-
-        printToTotal(printer, mealExpenses, total)
     }
 
     private fun printToTotal(
