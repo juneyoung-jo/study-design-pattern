@@ -32,12 +32,7 @@ class ExpenseReport(
 
     private fun printExpenses(printer: ReportPrinter) {
         for (expense in expenses) {
-            var name = "TILT"
-            name = when (expense.type) {
-                DINNER -> "Dinner"
-                BREAKFAST -> "Breakfast"
-                CAR_RENTAL -> "Car Rental"
-            }
+            val name = getName(expense)
             printer.print(
                 String.format(
                     "%s\t%s\t$%.02f\n",
@@ -49,6 +44,13 @@ class ExpenseReport(
             )
         }
     }
+
+    private fun getName(expense: Expense) =
+        when (expense.type) {
+            DINNER -> "Dinner"
+            BREAKFAST -> "Breakfast"
+            CAR_RENTAL -> "Car Rental"
+        }
 
     private fun printToTotal(printer: ReportPrinter) {
         printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(mealExpenses)))
