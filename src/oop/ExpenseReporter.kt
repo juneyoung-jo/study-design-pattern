@@ -5,7 +5,7 @@ import oop.Expense.Type.*
 /**
  * link : https://github.com/msbaek/expense
  */
-class ExpenseReport(
+class ExpenseReporter(
     private val expenses: MutableList<Expense> = ArrayList(),
     private var total: Int = 0,
     private var mealExpenses: Int = 0,
