@@ -28,17 +28,6 @@ class ExpenseReporter(
         }
     }
 
-    private fun totalUpExpenses() {
-        expenseExport.totalUpExpenses()
-    }
-
-    private fun addTotals(expense: Expense) {
-        expenseExport.addTotals(expense)
-    }
-
-    private fun isMeal(expense: Expense) =
-        expenseExport.isMeal(expense)
-
     private fun printExpense(expense: Expense) {
         printer.print(
             String.format(
