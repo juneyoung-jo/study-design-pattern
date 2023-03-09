@@ -35,16 +35,20 @@ class ExpenseReport(
 
     private fun printExpenses() {
         for (expense in expenses) {
-            printer.print(
-                String.format(
-                    "%s\t%s\t$%.02f\n",
-                    if (expense.type === DINNER && expense.amount > 5000
-                        || expense.type === BREAKFAST && expense.amount > 1000
-                    ) "X" else " ",
-                    getName(expense), penniesToDollars(expense.amount)
-                )
-            )
+            printExpense(expense)
         }
+    }
+
+    private fun printExpense(expense: Expense) {
+        printer.print(
+            String.format(
+                "%s\t%s\t$%.02f\n",
+                if (expense.type === DINNER && expense.amount > 5000
+                    || expense.type === BREAKFAST && expense.amount > 1000
+                ) "X" else " ",
+                getName(expense), penniesToDollars(expense.amount)
+            )
+        )
     }
 
     private fun getName(expense: Expense) =
