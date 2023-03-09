@@ -26,11 +26,14 @@ class ExpenseReport(
 
     private fun totalUpExpenses() {
         for (expense in expenses) {
-            if (isMeal(expense))
-                mealExpenses += expense.amount
-
-            total += expense.amount
+            addTotals(expense)
         }
+    }
+
+    private fun addTotals(expense: Expense) {
+        if (isMeal(expense))
+            mealExpenses += expense.amount
+        total += expense.amount
     }
 
     private fun isMeal(expense: Expense) =
