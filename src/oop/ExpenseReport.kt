@@ -8,17 +8,19 @@ import oop.Expense.Type.*
 class ExpenseReport(
     private val expenses: MutableList<Expense> = ArrayList(),
     private var total: Int = 0,
-    private var mealExpenses: Int = 0
+    private var mealExpenses: Int = 0,
+    private var printer: ReportPrinter
 ) {
 
     fun printReport(printer: ReportPrinter) {
-        printHeader(printer)
+        this.printer = printer
+        printHeader()
 
         totalUpExpenses()
 
-        printExpenses(printer)
+        printExpenses()
 
-        printToTotal(printer)
+        printToTotal()
     }
 
     private fun totalUpExpenses() {
@@ -30,16 +32,15 @@ class ExpenseReport(
         }
     }
 
-    private fun printExpenses(printer: ReportPrinter) {
+    private fun printExpenses() {
         for (expense in expenses) {
-            val name = getName(expense)
             printer.print(
                 String.format(
                     "%s\t%s\t$%.02f\n",
                     if (expense.type === DINNER && expense.amount > 5000
                         || expense.type === BREAKFAST && expense.amount > 1000
                     ) "X" else " ",
-                    name, penniesToDollars(expense.amount)
+                    getName(expense), penniesToDollars(expense.amount)
                 )
             )
         }
@@ -52,12 +53,12 @@ class ExpenseReport(
             CAR_RENTAL -> "Car Rental"
         }
 
-    private fun printToTotal(printer: ReportPrinter) {
+    private fun printToTotal() {
         printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(mealExpenses)))
         printer.print(String.format("\nTotal $%.02f", penniesToDollars(total)))
     }
 
-    private fun printHeader(printer: ReportPrinter) {
+    private fun printHeader() {
         printer.print("Expenses $date\n")
     }
 
