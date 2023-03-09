@@ -55,8 +55,9 @@ class ExpenseReport(
         )
     }
 
-    private fun isOverage(expense: Expense) = (expense.type === DINNER && expense.amount > 5000
-            || expense.type === BREAKFAST && expense.amount > 1000)
+    private fun isOverage(expense: Expense) =
+        (expense.type === DINNER && expense.amount > 5000)
+                || (expense.type === BREAKFAST && expense.amount > 1000)
 
     private fun getName(expense: Expense) =
         when (expense.type) {
