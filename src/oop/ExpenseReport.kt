@@ -14,12 +14,13 @@ class ExpenseReport(
 
     fun printReport(printer: ReportPrinter) {
         this.printer = printer
-        printHeader()
-
         totalUpExpenses()
+        printExpensesAndTotals()
+    }
 
+    private fun printExpensesAndTotals() {
+        printHeader()
         printExpenses()
-
         printToTotal()
     }
 
