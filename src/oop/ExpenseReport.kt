@@ -26,12 +26,15 @@ class ExpenseReport(
 
     private fun totalUpExpenses() {
         for (expense in expenses) {
-            if (expense.type === BREAKFAST || expense.type === DINNER)
+            if (isMeal(expense))
                 mealExpenses += expense.amount
 
             total += expense.amount
         }
     }
+
+    private fun isMeal(expense: Expense) =
+        expense.type === BREAKFAST || expense.type === DINNER
 
     private fun printExpenses() {
         for (expense in expenses) {
