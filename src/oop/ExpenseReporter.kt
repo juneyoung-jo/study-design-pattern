@@ -6,15 +6,13 @@ import oop.Expense.Type.*
  * link : https://github.com/msbaek/expense
  */
 class ExpenseReporter(
-    private val expenses: MutableList<Expense> = ArrayList(),
-    private var total: Int = 0,
-    private var mealExpenses: Int = 0,
+    private val expenseExport: ExpenseReport,
     private var printer: ReportPrinter
 ) {
 
     fun printReport(printer: ReportPrinter) {
         this.printer = printer
-        totalUpExpenses()
+        expenseExport.totalUpExpenses()
         printExpensesAndTotals()
     }
 
@@ -24,26 +22,22 @@ class ExpenseReporter(
         printToTotal()
     }
 
-    private fun totalUpExpenses() {
-        for (expense in expenses) {
-            addTotals(expense)
-        }
-    }
-
-    private fun addTotals(expense: Expense) {
-        if (isMeal(expense))
-            mealExpenses += expense.amount
-        total += expense.amount
-    }
-
-    private fun isMeal(expense: Expense) =
-        expense.type === BREAKFAST || expense.type === DINNER
-
     private fun printExpenses() {
-        for (expense in expenses) {
+        for (expense in expenseExport.expenses) {
             printExpense(expense)
         }
     }
+
+    private fun totalUpExpenses() {
+        expenseExport.totalUpExpenses()
+    }
+
+    private fun addTotals(expense: Expense) {
+        expenseExport.addTotals(expense)
+    }
+
+    private fun isMeal(expense: Expense) =
+        expenseExport.isMeal(expense)
 
     private fun printExpense(expense: Expense) {
         printer.print(
@@ -67,8 +61,8 @@ class ExpenseReporter(
         }
 
     private fun printToTotal() {
-        printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(mealExpenses)))
-        printer.print(String.format("\nTotal $%.02f", penniesToDollars(total)))
+        printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(expenseExport.mealExpenses)))
+        printer.print(String.format("\nTotal $%.02f", penniesToDollars(expenseExport.total)))
     }
 
     private fun printHeader() {
@@ -78,14 +72,35 @@ class ExpenseReporter(
     private fun penniesToDollars(amount: Int) =
         amount / 100.0
 
-    fun addExpense(expense: Expense) {
-        expenses.add(expense)
-    }
-
     private val date: String
         get() = "9/12/2002"
 }
 
+class ExpenseReport(
+    val expenses: MutableList<Expense> = ArrayList(),
+    var total: Int = 0,
+    var mealExpenses: Int = 0,
+) {
+    fun totalUpExpenses() {
+        for (expense in expenses) {
+            addTotals(expense)
+        }
+    }
+
+    fun addTotals(expense: Expense) {
+        if (isMeal(expense))
+            mealExpenses += expense.amount
+        total += expense.amount
+    }
+
+    fun isMeal(expense: Expense) =
+        expense.type === BREAKFAST || expense.type === DINNER
+
+    fun addExpense(expense: Expense) {
+        expenses.add(expense)
+    }
+
+}
 
 class Expense(
     val type: Type,
