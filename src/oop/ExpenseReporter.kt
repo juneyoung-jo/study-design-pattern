@@ -1,7 +1,5 @@
 package oop
 
-import oop.Expense.Type.*
-
 /**
  * link : https://github.com/msbaek/expense
  */
@@ -39,10 +37,11 @@ class ExpenseReporter(
     }
 
     private fun getName(expense: Expense) =
-        when (expense.type) {
-            DINNER -> "Dinner"
-            BREAKFAST -> "Breakfast"
-            CAR_RENTAL -> "Car Rental"
+        when (expense) {
+            is DinnerExpense -> "Dinner"
+            is BreakFastExpense -> "Breakfast"
+            is CarRentalExpense -> "Car Rental"
+            else -> ""
         }
 
     private fun printToTotal() {
@@ -83,7 +82,6 @@ class ExpenseReport(
     }
 
 }
-
 
 
 interface ReportPrinter {
