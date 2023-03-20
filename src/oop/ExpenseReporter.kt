@@ -5,7 +5,8 @@ package oop
  */
 class ExpenseReporter(
     private val expenseExport: ExpenseReport,
-    private var printer: ReportPrinter
+    private var printer: ReportPrinter,
+    private val expenseNamer: ExpenseNamer
 ) {
 
     fun printReport(printer: ReportPrinter) {
@@ -37,12 +38,7 @@ class ExpenseReporter(
     }
 
     private fun getName(expense: Expense) =
-        when (expense) {
-            is DinnerExpense -> "Dinner"
-            is BreakFastExpense -> "Breakfast"
-            is CarRentalExpense -> "Car Rental"
-            else -> ""
-        }
+        expenseNamer.getName(expense)
 
     private fun printToTotal() {
         printer.print(String.format("\nMeal expenses $%.02f", penniesToDollars(expenseExport.mealExpenses)))
@@ -58,6 +54,20 @@ class ExpenseReporter(
 
     private val date: String
         get() = "9/12/2002"
+}
+
+class ExpenseReportName : ExpenseNamer {
+    override fun getName(expense: Expense) =
+        when (expense) {
+            is DinnerExpense -> "Dinner"
+            is BreakFastExpense -> "Breakfast"
+            is CarRentalExpense -> "Car Rental"
+            else -> ""
+        }
+}
+
+interface ExpenseNamer {
+    fun getName(expense: Expense): String
 }
 
 class ExpenseReport(
@@ -82,7 +92,6 @@ class ExpenseReport(
     }
 
 }
-
 
 interface ReportPrinter {
     fun print(text: String?)
