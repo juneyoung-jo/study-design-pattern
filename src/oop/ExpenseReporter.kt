@@ -32,15 +32,11 @@ class ExpenseReporter(
         printer.print(
             String.format(
                 "%s\t%s\t$%.02f\n",
-                if (isOverage(expense)) "X" else " ",
+                if (expense.isOverage()) "X" else " ",
                 getName(expense), penniesToDollars(expense.amount)
             )
         )
     }
-
-    private fun isOverage(expense: Expense) =
-        (expense.type === DINNER && expense.amount > 5000)
-                || (expense.type === BREAKFAST && expense.amount > 1000)
 
     private fun getName(expense: Expense) =
         when (expense.type) {
@@ -77,13 +73,10 @@ class ExpenseReport(
     }
 
     fun addTotals(expense: Expense) {
-        if (isMeal(expense))
+        if (expense.isMeal())
             mealExpenses += expense.amount
         total += expense.amount
     }
-
-    fun isMeal(expense: Expense) =
-        expense.type === BREAKFAST || expense.type === DINNER
 
     fun addExpense(expense: Expense) {
         expenses.add(expense)
@@ -98,6 +91,13 @@ class Expense(
     enum class Type {
         DINNER, BREAKFAST, CAR_RENTAL
     }
+
+    fun isMeal() =
+        type === BREAKFAST || type === DINNER
+
+    fun isOverage() =
+        (type === DINNER && amount > 5000)
+                || (type === BREAKFAST && amount > 1000)
 }
 
 interface ReportPrinter {
