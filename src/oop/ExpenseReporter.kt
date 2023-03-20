@@ -84,21 +84,7 @@ class ExpenseReport(
 
 }
 
-class Expense(
-    val type: Type,
-    val amount: Int
-) {
-    enum class Type {
-        DINNER, BREAKFAST, CAR_RENTAL
-    }
 
-    fun isMeal() =
-        type === BREAKFAST || type === DINNER
-
-    fun isOverage() =
-        (type === DINNER && amount > 5000)
-                || (type === BREAKFAST && amount > 1000)
-}
 
 interface ReportPrinter {
     fun print(text: String?)
