@@ -45,10 +45,10 @@ class JsonDataProcessor : DataProcessor() {
 
 fun main() {
     val csvDataProcessor: DataProcessor = CsvDataProcessor()
-    csvDataProcessor.processData()
+    csvDataProcessor.process()
 
     println("================================================")
 
     val jsonProcessor: DataProcessor = JsonDataProcessor()
-    jsonProcessor.processData()
+    jsonProcessor.process()
 }
