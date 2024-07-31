@@ -1,4 +1,4 @@
-package patterns.structural
+package patterns.structural.adapter
 
 fun main() {
     val adaptee = Adaptee()
@@ -27,4 +27,3 @@ class Adaptee {
         println("Specific request.")
     }
 }
-

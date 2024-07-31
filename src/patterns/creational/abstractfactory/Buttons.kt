@@ -21,5 +21,4 @@ class WindowButton : Button {
     override fun paint() {
         println("You have created WindowButton.")
     }
-
 }

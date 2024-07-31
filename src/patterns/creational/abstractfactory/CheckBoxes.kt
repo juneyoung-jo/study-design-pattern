@@ -1,7 +1,5 @@
 package patterns.creational.abstractfactory
 
-import kotlin.reflect.jvm.internal.impl.util.Check
-
 /**
  * Checkboxes is the second product family. It has the same variants as buttons.
  */

@@ -10,14 +10,11 @@ interface GUIFactory {
 
 class MacOSFactory : GUIFactory {
     override fun createButton(): Button = MacOSButton()
-
     override fun createCheckbox(): Checkbox = MacOSCheckbox()
 }
 
 
 class WindowFactory : GUIFactory {
     override fun createButton(): Button = WindowButton()
-
     override fun createCheckbox(): Checkbox = WindowCheckbox()
-
 }
